@@ -5,7 +5,9 @@ class City:
   def __init__(self, name, lat, lon):
     self.name = name
     self.lat = lat 
-    self.lon = lon 
+    self.lon = lon
+  def __str__(self):
+    return f"{self.name} {self.lat} {self.lon}"
     
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
@@ -19,6 +21,8 @@ class City:
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+import csv 
+
 cities = []
 
 def cityreader(cities=[]):
@@ -28,9 +32,9 @@ def cityreader(cities=[]):
     with open('src/cityreader/cities.csv') as csvfile: 
       citiesData = csv.reader(csvfile) # Return a reader object which will iterate over lines in the given csvfile
     
-    for city in citiesData:
-      if "country_name" not in city: 
-        cities.append(City(city[0], float(city[3]), float(city[4]))
+      for city in citiesData:
+        if "state_name" not in city: 
+          cities.append(City(city[0], float(city[3]), float(city[4])))
     return cities
 
 cityreader(cities)
