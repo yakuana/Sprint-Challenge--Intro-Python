@@ -1,7 +1,14 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
 
-
+class City: 
+  def __init__(self, name, lat, lon):
+    self.name = name
+    self.lat = lat 
+    self.lon = lon
+  def __str__(self):
+    return f"{self.name} {self.lat} {self.lon}"
+    
 # We have a collection of US cities with population over 750,000 stored in the
 # file "cities.csv". (CSV stands for "comma-separated values".)
 #
@@ -14,13 +21,20 @@
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+import csv 
+
 cities = []
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
+    with open('src/cityreader/cities.csv') as csvfile: 
+      citiesData = csv.reader(csvfile) # Return a reader object which will iterate over lines in the given csvfile
     
+      for city in citiesData:
+        if "state_name" not in city: 
+          cities.append(City(city[0], float(city[3]), float(city[4])))
     return cities
 
 cityreader(cities)
@@ -68,4 +82,19 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
+  if len(cities) == 0:
+    return within 
+
+  lat_bounds = [lat1, lat2]
+
+  lat_bounds.sort()
+
+  lon_bounds = [lon1, lon2]
+
+  lon_bounds.sort()
+
+  for city in cities: 
+    if (city.lat >= lat_bounds[0] and city.lat <= lat_bounds[1]):
+      if (city.lon >= lon_bounds[0] and city.lon <= lon_bounds[1]):
+        within.append(city)
   return within
